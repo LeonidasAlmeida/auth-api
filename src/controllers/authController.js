@@ -1,9 +1,10 @@
 const User = require("../models/User")
 const bcrypt = require('bcryptjs')
 const { resStatus } = require("../utils/statusResponse")
-const { registrationValidations } = require("../validations/authValidation")
+const { registrationValidations, loginValidations } = require("../validations/authValidation")
+const { tokenGenerate } = require("../utils/generateToken")
 
-const createUser = async (req, res) =>{
+const createUserController = async (req, res) =>{
     try {
         //get data from user
         const {error, value} = registrationValidations.validate(req.body)
@@ -21,5 +22,28 @@ const createUser = async (req, res) =>{
         resStatus(res,500,false,'Error into create a user API')
     }
 }
-
-module.exports = { createUser }
+const loginUserController = async (req, res) =>{
+    //get user data
+   try {
+        const { error, value } = loginValidations.validate(req.body)
+        if(error){
+            return resStatus(res,500,false,'Error to validate API login',error)
+        }
+        //find email
+        const findEmail = await User.findOne({email : value.email})
+         if(!findEmail){
+            return resStatus(res,500,false,'Error to get Email')
+        }
+        //validations hash
+         const isMatch = await bcrypt.compare(value.password,findEmail.password)
+         if(!isMatch){
+            return resStatus(res,500,false,'Error to descriptography of data')
+        }
+        //token generate
+        resStatus(res,200,true,'Successfuly in login','',tokenGenerate(isMatch._id))
+   } catch (error) {
+     resStatus(res,500,false,'Error into API login',error)
+   }
+    
+}
+module.exports = {  createUserController, loginUserController }

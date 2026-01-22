@@ -13,8 +13,8 @@ const emailValidations = Joi.object({
 })
 
 const loginValidations = Joi.object({
-    email: Joi.string().email().required(),
-    password: Joi.string().required()
+   email: Joi.string().email().required(),
+    password: Joi.string().min(4).required()
 
 })
 
