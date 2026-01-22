@@ -16,6 +16,7 @@ app.use(morgan("dev"))
 
 //routes
 app.use('/api/v1/test',require('./src/routes/testeRoutes'))
+app.use('/api/v1/user',require('./src/routes/authRoutes'))
 
 //PORT
 const PORT = process.env.PORT || 5000;
