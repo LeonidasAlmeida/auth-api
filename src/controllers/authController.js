@@ -46,4 +46,16 @@ const loginUserController = async (req, res) =>{
    }
     
 }
-module.exports = {  createUserController, loginUserController }
+const getUserController = async ( req, res ) =>{
+    try {
+        //get all user
+        const data = await User.find({})
+        if(!data){
+            return resStatus(res,500,'Error to get data')
+        }
+        resStatus(res,200,true,'Success to get all user','',data)
+    } catch (error) {  
+        resStatus(res,500,false,'Error into Get user API')
+    }
+}
+module.exports = {  createUserController, loginUserController, getUserController }
