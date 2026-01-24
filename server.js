@@ -5,6 +5,7 @@ const app = express()
 const dotenv = require('dotenv')
 const morgan = require('morgan')
 const connectDB = require('./src/config/db')
+const { errorMiddleware } = require('./src/middlewares/errorMiddleware')
 
 dotenv.config()
 //connect to database
@@ -13,7 +14,7 @@ dotenv.config()
 app.use(cors())
 app.use(express.json())
 app.use(morgan("dev"))
-
+app.use(errorMiddleware)
 //routes
 app.use('/api/v1/test',require('./src/routes/testeRoutes'))
 app.use('/api/v1/user',require('./src/routes/authRoutes'))

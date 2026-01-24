@@ -16,10 +16,10 @@ const createUserController = async (req, res) =>{
         const salt = bcrypt.genSaltSync(10)
         const hashedPassword = await bcrypt.hash(value.password,salt)
         //create new user
-        await User.create({password:hashedPassword,userName:value.userName,email:value.email,userType:value.userType})
+        await User.create({password:hashedPassword,userName:value.userName,email:value.email,role:value.role})
         resStatus(res,200,true,'Sucess to create user')
        } catch (error) {
-        resStatus(res,500,false,'Error into create a user API')
+        resStatus(res,500,false,'Error into create a user API',error)
     }
 }
 const loginUserController = async (req, res) =>{

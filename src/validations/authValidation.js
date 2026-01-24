@@ -5,7 +5,7 @@ const registrationValidations = Joi.object({
     userName: Joi.string().min(3).required(),
     email: Joi.string().email().required(),
     password: Joi.string().min(4).required(),
-    userType: Joi.string().required()
+    role: Joi.string().required()
 })
 
 const emailValidations = Joi.object({

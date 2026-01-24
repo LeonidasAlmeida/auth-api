@@ -1,5 +1,5 @@
 //response ok 
-const resStatus =(res,status,success,message,error,data)=>{
+const resStatus = (res,status,success,message,error,data)=>{
     console.log('',error)
     return res.status(status).send({
         success:success,
